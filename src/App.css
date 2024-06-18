@@ -1,4 +1,9 @@
-div {
+.main {
+  display: flex;
+  width: 100%;
+  height: 100%;
+}
+.contentSelectText {
   color: black;
   font-family: "iAWriterMonoS", monospace;
   font-size: 36px;
@@ -6,4 +11,39 @@ div {
   line-height: 46.8px;
   letter-spacing: -0.05em;
   text-align: left;
+  width: 279px;
+  height: 47px;
+  margin-top: 20px;
+  margin-left: 20px;
+}
+
+.indexingText {
+  font-size: 36px;
+  font-weight: 400;
+  line-height: 46.8px;
+  letter-spacing: -0.05em;
+  font-family: "iAWriterMonoS", monospace;
+  width: 161px;
+  height: 47px;
+  margin-top: 20px;
+  margin-left: 20px;
+}
+
+.subText {
+  width: 265px;
+  height: 32px;
+  margin-top: 60px;
+  margin-left: 20px;
+}
+
+.leftPanel {
+  width: 50%;
+}
+
+.divider {
+  background: #19002933;
+  width: 2px;
+  margin-top: 20px;
+  margin-bottom: 20px;
+  /* height: 100%; */
 }
