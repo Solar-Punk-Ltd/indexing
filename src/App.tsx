@@ -11,10 +11,11 @@ function App() {
   const [fileName, setFileName] = useState("");
 
   const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const file = event.target.files ? event.target.files[0] : null;
-    if (file) {
-      setFile(file);
-      setFileName(file.name); // Itt tároljuk el a fájl nevét
+    const fileResult = event.target.files ? event.target.files[0] : null;
+    console.log(fileResult);
+    if (fileResult) {
+      setFile(fileResult);
+      setFileName(fileResult.name); // Itt tároljuk el a fájl nevét
     }
   };
 
@@ -24,35 +25,45 @@ function App() {
         <div className="leftPanel">
           <div className="contentSelectText">Select content</div>
           <div className="subText">Add a file to upload on SWARM!</div>
-          <input
-            accept="image/*"
-            type="file"
-            id="contained-button-file"
-            onChange={handleFileChange}
-            style={{ display: "none" }}
-          />
-          <label htmlFor="contained-button-file">
-            <Button
-              variant="contained"
-              color="primary"
-              component="div"
+          <div className="fileUploader">
+            <input
+              accept="image/*"
+              type="file"
+              id="contained-button-file"
+              onChange={handleFileChange}
+              style={{ display: "none" }}
+            />
+            <div className="tooltip">i</div>
+            <label
+              htmlFor="contained-button-file"
               style={{
-                backgroundColor: "white",
-                color: "#19002933",
-                fontSize: 16,
-                fontWeight: 400,
-                lineHeight: "32px",
-                justifyContent: "left",
-                width: "569px",
-                height: "48px",
-                marginTop: "40px",
-                marginLeft: "20px",
-                boxShadow: "none",
+                marginLeft: "10px",
+                width: "100%",
+                position: "relative",
               }}
             >
-              Path and filename
-            </Button>
-          </label>
+              <Button
+                variant="contained"
+                color="primary"
+                component="div"
+                style={{
+                  textTransform: "none",
+                  backgroundColor: "white",
+                  color: "#19002933",
+                  fontSize: 16,
+                  fontWeight: 400,
+                  lineHeight: "32px",
+                  justifyContent: "left",
+                  width: "100%",
+                  height: "48px",
+                  boxShadow: "none",
+                  clipPath: "polygon(96% 0%,100% 50%,100% 100%,0% 100%,0% 0%)",
+                }}
+              >
+                {fileName ? fileName : "Path and filename"}
+              </Button>
+            </label>
+          </div>
         </div>
         <div className="divider"></div>
         <div>

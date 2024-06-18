@@ -40,6 +40,36 @@
   width: 50%;
 }
 
+label::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 8px;
+  height: 8px;
+  background-color: #d00000;
+  border-radius: 50%;
+}
+
+.fileUploader {
+  display: flex;
+  width: 569px;
+  margin-top: 40px;
+  margin-left: 20px;
+}
+
+.tooltip {
+  font-size: 10px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 15px;
+  height: 15px;
+  background: black;
+  color: white;
+  clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
+}
+
 .divider {
   background: #19002933;
   width: 2px;
