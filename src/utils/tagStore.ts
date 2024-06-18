@@ -33,7 +33,11 @@ export class Store {
         const feedWriter = this.bee.makeFeedWriter('sequence', '0'.repeat(64), this.wallet.privateKey);
         const data = await this.getAll();
         if (data[key]) {
-            data[key].push(value);
+            if (!data[key].includes(value)) {
+                data[key].push(value);
+            } else {
+                return 'Value already exists, skipping insert';
+            }
         } else {
             data[key] = [value];
         }
