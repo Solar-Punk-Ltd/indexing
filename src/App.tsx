@@ -3,6 +3,7 @@ import "./App.css";
 import Button from "@mui/material/Button";
 import AddIcon from "@mui/icons-material/Add";
 import StoreTest from "./StoreTest";
+import FileType from "./FileType";
 
 function App() {
   const [file, setFile] = useState<File | null>(null);
@@ -87,7 +88,10 @@ function App() {
           </Button>
         </div>
       </div>
-
+      
+      <FileType />
+      <h1>placeholder</h1>
+      <h1>placaholder</h1>
       <StoreTest />
     </>
   );

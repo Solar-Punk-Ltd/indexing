@@ -27,7 +27,7 @@ function StoreTest() {
 
     async function test() {
         const store = await loadStore();
-        const res = await store.set({ test: "Hello World" });
+        const res = await store.set({ test: "Hello world" });
         console.log("Set result: ", res);
         const data = await store.get();
         console.log("Data: ", data);
