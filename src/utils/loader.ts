@@ -1,8 +1,6 @@
 import { ethers } from "ethers";
-import { Store } from "./tagStore";
-
-const STAMP = "bdf637f9d62784457b8d1e67c89fc5433c84cbee392290485f810444c95fd165";
-const BEE_API_URL = "http://localhost:1633";
+import { IndexStore } from "./indexStore";
+import { STAMP, BEE_API_URL } from "../config"
 
 export async function loadStore() {
     const localStorageReadResult = localStorage.getItem("privateKey");
@@ -13,7 +11,7 @@ export async function loadStore() {
     } else {
         privKey = localStorageReadResult;
     }
-    const store = new Store(privKey, STAMP, BEE_API_URL);
+    const store = new IndexStore(privKey, STAMP, BEE_API_URL);
     store.initialize();
 
     return store;

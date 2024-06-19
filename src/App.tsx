@@ -7,7 +7,10 @@ import NewKeywordsModal from "./components/NewKeywordsModal/NewKeywordsModal";
 import Tag from "./components/Tag/Tag";
 import FileUploadIcon from "@mui/icons-material/FileUpload";
 import { loadStore } from "./utils/loader";
-import { Store } from "./utils/tagStore";
+import { Trie } from "./utils/index-trie"
+import { Bee } from "@ethersphere/bee-js";
+import { STAMP } from "./config";
+import { IndexStore } from "./utils/indexStore";
 import SuccessUploadMessage from "./components/SuccessUploadMessage/SuccessUploadMessage";
 import SearchPage from "./pages/SearchPage/SearchPage";
 import { HashRouter } from "react-router-dom";
@@ -15,7 +18,8 @@ import BaseRouter from "../public/routes";
 
 function App() {
   const [file, setFile] = useState<File | null>(null);
-  const [store, setStore] = useState<Store | null>(null);
+  const [store, setStore] = useState<IndexStore | null>(null);
+  const [bee, setBee] = useState<Bee | null>(null);
   const [fileName, setFileName] = useState("");
   const [newKeywordsModalOpen, setNewKeywordsModalOpen] = useState(false);
   const [tags, setTags] = useState<string[]>([]);
@@ -29,8 +33,12 @@ function App() {
   }, []);
 
   async function init() {
+    const t = new Trie();
     const s = await loadStore();
+    s.set(t);
+    const b = new Bee("http://localhost:1633");
     setStore(s);
+    setBee(b);
   }
 
   const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -43,9 +51,47 @@ function App() {
     }
   };
 
-  const handleConfirmButton = () => {
-    setSuccessUploadMessageOpen(true);
+  const handleConfirmButton = async () => {
+    if (!store || !bee || !file || tags.length === 0) {
+      return;
+    }
+
+    try {
+      // Load trie from store
+      const trieData = await store.get();
+      const trie = new Trie();
+      Object.assign(trie, trieData);
+      Object.setPrototypeOf(trie, Trie.prototype);
+  
+      const uploadRes = await bee.uploadFile(STAMP, file, file.name);
+      console.log("Upload: ", uploadRes);
+  
+      tags.forEach((tag) => {
+        trie.insert(tag, uploadRes.reference);
+      });
+
+      console.log("Query: ", trie.query(["swarm"]))
+      const saveResult = await store.set(trie as object);
+      console.log("Save result: ", saveResult);
+      
+    } catch (error) {
+      console.error(error);
+    }
   };
+
+  const readBack = async () => {
+    if (!store || !bee) {
+      return;
+    }
+
+    // Load trie from store
+    const trieData = await store.get();
+    const trie = new Trie();
+    Object.assign(trie, trieData);
+    Object.setPrototypeOf(trie, Trie.prototype);
+
+    console.log("Query: ", trie.query(["bee"]))
+  }
 
   return (
     <>
@@ -62,6 +108,10 @@ function App() {
               style={{ display: "none" }}
             />
             <div className="tooltip">i</div>
+
+            <div>
+              <button onClick={readBack}>READ BACK</button>
+            </div>
 
             <label
               htmlFor="contained-button-file"

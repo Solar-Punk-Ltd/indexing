@@ -49,7 +49,7 @@ export class IndexStore {
     
             return true;
         } catch (error) {
-            console.error(error);
+            console.error("Error saving trie to Swarm: ", error);
             return false;
         }
     }
