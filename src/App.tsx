@@ -9,6 +9,9 @@ import FileUploadIcon from "@mui/icons-material/FileUpload";
 import { loadStore } from "./utils/loader";
 import { Store } from "./utils/tagStore";
 import SuccessUploadMessage from "./components/SuccessUploadMessage/SuccessUploadMessage";
+import SearchPage from "./pages/SearchPage/SearchPage";
+import { HashRouter } from "react-router-dom";
+import BaseRouter from "../public/routes";
 
 function App() {
   const [file, setFile] = useState<File | null>(null);
@@ -19,6 +22,7 @@ function App() {
   const [isFileChoosed, setIsFileChoosed] = useState(false);
   const [successUploadMessageOpen, setSuccessUploadMessageOpen] =
     useState(false);
+  const [isSearchScreenOpen, setIsSearchScreenOpen] = useState(false);
 
   useEffect(() => {
     init();
@@ -176,6 +180,7 @@ function App() {
         >
           <SuccessUploadMessage
             setSuccessUploadMessageOpen={setSuccessUploadMessageOpen}
+            setIsSearchScreenOpen={setIsSearchScreenOpen}
           />
         </div>
       ) : null}

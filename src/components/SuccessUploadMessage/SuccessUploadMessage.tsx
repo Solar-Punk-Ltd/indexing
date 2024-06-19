@@ -1,21 +1,22 @@
-import { useState } from "react";
-import Button from "@mui/material/Button";
-import { SvgIconProps } from "@mui/material/SvgIcon";
 import "./SuccessUploadMessage.css";
-import TextField from "@mui/material/TextField";
 import ConfirmButton from "../ConfirmButton/ConfirmButton";
-import CancelButton from "../CancelButton/CancelButton";
 import DoneIcon from "@mui/icons-material/Done";
+import { Link } from "react-router-dom";
+import { ROUTES } from "../../../public/routes";
+import Button from "@mui/material/Button";
 
 interface SuccessUploadMessageProps {
   setSuccessUploadMessageOpen: (open: boolean) => void;
+  setIsSearchScreenOpen: (open: boolean) => void;
 }
 
 const SuccessUploadMessage: React.FC<SuccessUploadMessageProps> = ({
   setSuccessUploadMessageOpen,
+  setIsSearchScreenOpen,
 }) => {
   const handleCool = () => {
     setSuccessUploadMessageOpen(false);
+    setIsSearchScreenOpen(true);
   };
   return (
     <div
@@ -47,6 +48,9 @@ const SuccessUploadMessage: React.FC<SuccessUploadMessageProps> = ({
           bottom: "20px",
         }}
       >
+        <Link to={ROUTES.SEARCH}>
+          <Button>TEszt</Button>
+        </Link>
         <ConfirmButton value="Cool" icon={DoneIcon} onClick={handleCool} />
       </div>
     </div>

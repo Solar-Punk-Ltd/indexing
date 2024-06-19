@@ -19,7 +19,9 @@ const NewKeywordsModal: React.FC<NewKeywordsModalProps> = ({
   const [textFieldValue, setTextFieldValue] = useState<string>("");
 
   const handleTagSubmit = () => {
-    const tagsFromTextField = textFieldValue.split(",");
+    const tagsFromTextField = textFieldValue
+      .split(",")
+      .map((tag) => tag.trim());
 
     setTags([...tagsFromTextField]);
     setNewKeywordsModalOpen(false);
