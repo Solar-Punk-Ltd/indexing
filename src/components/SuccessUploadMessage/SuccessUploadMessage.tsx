@@ -49,9 +49,8 @@ const SuccessUploadMessage: React.FC<SuccessUploadMessageProps> = ({
         }}
       >
         <Link to={ROUTES.SEARCH}>
-          <Button>TEszt</Button>
+          <ConfirmButton value="Cool" icon={DoneIcon} onClick={handleCool} />
         </Link>
-        <ConfirmButton value="Cool" icon={DoneIcon} onClick={handleCool} />
       </div>
     </div>
   );
