@@ -12,9 +12,7 @@ import { Bee } from "@ethersphere/bee-js";
 import { STAMP } from "./config";
 import { IndexStore } from "./utils/indexStore";
 import SuccessUploadMessage from "./components/SuccessUploadMessage/SuccessUploadMessage";
-import SearchPage from "./pages/SearchPage/SearchPage";
-import { HashRouter } from "react-router-dom";
-import BaseRouter from "../public/routes";
+
 
 function App() {
   const [file, setFile] = useState<File | null>(null);
@@ -33,8 +31,12 @@ function App() {
   }, []);
 
   async function init() {
-    const t = new Trie();
     const s = await loadStore();
+    const tData = await s.get();
+    const t = new Trie();
+    Object.assign(t, tData);
+    Object.setPrototypeOf(t, Trie.prototype);
+
     s.set(t);
     const b = new Bee("http://localhost:1633");
     setStore(s);
@@ -53,6 +55,7 @@ function App() {
 
   const handleConfirmButton = async () => {
     if (!store || !bee || !file || tags.length === 0) {
+      console.log("Store, bee, file or tags are missing");
       return;
     }
 
@@ -64,34 +67,20 @@ function App() {
       Object.setPrototypeOf(trie, Trie.prototype);
   
       const uploadRes = await bee.uploadFile(STAMP, file, file.name);
-      console.log("Upload: ", uploadRes);
   
       tags.forEach((tag) => {
         trie.insert(tag, uploadRes.reference);
       });
 
-      console.log("Query: ", trie.query(["swarm"]))
       const saveResult = await store.set(trie as object);
       console.log("Save result: ", saveResult);
+      setSuccessUploadMessageOpen(true);
       
     } catch (error) {
       console.error(error);
     }
   };
 
-  const readBack = async () => {
-    if (!store || !bee) {
-      return;
-    }
-
-    // Load trie from store
-    const trieData = await store.get();
-    const trie = new Trie();
-    Object.assign(trie, trieData);
-    Object.setPrototypeOf(trie, Trie.prototype);
-
-    console.log("Query: ", trie.query(["bee"]))
-  }
 
   return (
     <>
@@ -108,10 +97,6 @@ function App() {
               style={{ display: "none" }}
             />
             <div className="tooltip">i</div>
-
-            <div>
-              <button onClick={readBack}>READ BACK</button>
-            </div>
 
             <label
               htmlFor="contained-button-file"

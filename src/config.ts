@@ -1,2 +1,2 @@
-export const STAMP = "bdf637f9d62784457b8d1e67c89fc5433c84cbee392290485f810444c95fd165";
+export const STAMP = "4951916921c94acd9b695177ac18f7e9340da2b0b1a6b12f3e5e46ee679a1438";
 export const BEE_API_URL = "http://localhost:1633";
