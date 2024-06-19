@@ -1,0 +1,40 @@
+.keywordsSelectText {
+  color: black;
+  font-family: "iAWriterMonoS", monospace;
+  font-size: 36px;
+  font-weight: 400;
+  line-height: 46.8px;
+  letter-spacing: -0.05em;
+  text-align: left;
+  width: 279px;
+  height: 47px;
+}
+
+.keywordsSubText {
+  width: 538px;
+  height: 32px;
+  margin-top: 60px;
+}
+
+.tooltip {
+  font-size: 10px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 15px;
+  height: 15px;
+  background: black;
+  color: white;
+  clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
+}
+
+.sp-textfield::after {
+  content: "";
+  position: relative;
+  top: 0;
+  right: 8px;
+  width: 8px;
+  height: 8px;
+  background-color: #d00000;
+  border-radius: 50%;
+}
