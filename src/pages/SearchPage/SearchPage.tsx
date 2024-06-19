@@ -13,6 +13,7 @@ function SearchPage() {
   const [text, setText] = useState<string>("");
   const [store, setStore] = useState<IndexStore | null>(null);
   const [bee, setBee] = useState<Bee | null>(null);
+  const [results, setResults] = useState<string[]>([]);
 
   useEffect(() => {
     init();
@@ -48,6 +49,8 @@ function SearchPage() {
       .map((tag) => tag.trim());
 
     const result = trie.query(tags);
+    console.log(result);
+    setResults(result);
 
     setIsClicked(true);
   }
@@ -114,7 +117,17 @@ function SearchPage() {
           }}
         >
           Results
-          {}
+        <div style={{ display: "flex"}}>
+
+          {results.map((result, index) => (
+            <img
+            key={index} 
+            src={`https://gateway-proxy-bee-1-0.gateway.ethswarm.org/bzz/${result}`} 
+            width={400}
+            style={{ margin: "20px" }}
+            />              
+          ))}
+          </div>
         </div>
       </div>
     </>
