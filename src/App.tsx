@@ -1,20 +1,29 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import "./App.css";
 import Button from "@mui/material/Button";
-import Box from "@mui/material/Box";
 import AddIcon from "@mui/icons-material/Add";
 import ConfirmButton from "./components/ConfirmButton/ConfirmButton";
 import NewKeywordsModal from "./components/NewKeywordsModal/NewKeywordsModal";
 import Tag from "./components/Tag/Tag";
 import FileUploadIcon from "@mui/icons-material/FileUpload";
-import StoreTest from "./StoreTest";
-import FileType from "./FileType";
+import { loadStore } from "./utils/loader";
+import { Store } from "./utils/tagStore";
 
 function App() {
   const [file, setFile] = useState<File | null>(null);
+  const [store, setStore] = useState<Store | null>(null);
   const [fileName, setFileName] = useState("");
   const [newKeywordsModalOpen, setNewKeywordsModalOpen] = useState(false);
   const [tags, setTags] = useState<string[]>([]);
+
+  useEffect(() => {
+    init();
+  }, []);
+
+  async function init() {
+    const s = await loadStore();
+    setStore(s);
+  }
 
   const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const fileResult = event.target.files ? event.target.files[0] : null;
@@ -135,11 +144,6 @@ function App() {
           />
         </div>
       ) : null}
-
-      <FileType />
-      <h1>placeholder</h1>
-      <h1>placaholder</h1>
-      <StoreTest />
     </>
   );
 }
