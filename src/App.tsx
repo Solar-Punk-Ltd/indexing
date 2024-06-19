@@ -1,10 +1,8 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import "./App.css";
-import { Store } from "./utils/tagStore";
-import { IndexStore } from "./utils/indexStore";
 import Button from "@mui/material/Button";
-import TextField from "@mui/material/TextField";
 import AddIcon from "@mui/icons-material/Add";
+import StoreTest from "./StoreTest";
 
 function App() {
   const [file, setFile] = useState<File | null>(null);
@@ -89,6 +87,8 @@ function App() {
           </Button>
         </div>
       </div>
+
+      <StoreTest />
     </>
   );
 }

@@ -14,28 +14,43 @@ export class IndexStore {
         this.bee = new Bee(beeApiUrl);
     }
 
-    async initialize(): Promise<string> {
-        const manifest = await this.bee.createFeedManifest(this.stamp, 'sequence', TOPIC, this.wallet.address);
-        const writer = this.bee.makeFeedWriter('sequence', TOPIC, this.wallet.privateKey);
-        const uploadResults = await this.bee.uploadData(this.stamp, JSON.stringify({}));
-        await writer.upload(this.stamp, uploadResults.reference, { index: 0 });
-
-        return manifest.reference;
+    async initialize(): Promise<string | null> {
+        try {
+            const manifest = await this.bee.createFeedManifest(this.stamp, 'sequence', TOPIC, this.wallet.address);
+            const writer = this.bee.makeFeedWriter('sequence', TOPIC, this.wallet.privateKey);
+            const uploadResults = await this.bee.uploadData(this.stamp, JSON.stringify({}));
+            await writer.upload(this.stamp, uploadResults.reference, { index: 0 });
+    
+            return manifest.reference;
+        } catch (error) {
+            console.error(error);
+            return null;
+        }
     }
 
     async get(): Promise<object> {
-        const feedReader = this.bee.makeFeedReader('sequence', TOPIC, this.wallet.address);
-        const feedDownloadResults = await feedReader.download();
-        const data = await this.bee.downloadData(feedDownloadResults.reference);
-
-        return JSON.parse(data.text());
+        try {
+            const feedReader = this.bee.makeFeedReader('sequence', TOPIC, this.wallet.address);
+            const feedDownloadResults = await feedReader.download();
+            const data = await this.bee.downloadData(feedDownloadResults.reference);
+    
+            return JSON.parse(data.text());
+        } catch (error) {
+            console.error(error);
+            return {};
+        }
     }
 
     async set(data: object): Promise<boolean> {
-        const feedWriter = this.bee.makeFeedWriter('sequence', TOPIC, this.wallet.privateKey);
-        const uploadResults = await this.bee.uploadData(this.stamp, JSON.stringify(data));
-        await feedWriter.upload(this.stamp, uploadResults.reference);
-
-        return true;
+        try {
+            const feedWriter = this.bee.makeFeedWriter('sequence', TOPIC, this.wallet.privateKey);
+            const uploadResults = await this.bee.uploadData(this.stamp, JSON.stringify(data));
+            await feedWriter.upload(this.stamp, uploadResults.reference);
+    
+            return true;
+        } catch (error) {
+            console.error(error);
+            return false;
+        }
     }
 }

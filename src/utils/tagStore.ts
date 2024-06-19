@@ -1,6 +1,8 @@
 import { Bee } from '@ethersphere/bee-js';
 import { Wallet } from 'ethers';
 
+const TOPIC = '0'.repeat(64);
+
 export class Store {
     private wallet: Wallet;
     private stamp: string;
@@ -13,7 +15,7 @@ export class Store {
     }
 
     async initialize(): Promise<string> {
-        const manifest = await this.bee.createFeedManifest(this.stamp, 'sequence', '0'.repeat(64), this.wallet.address);
+        const manifest = await this.bee.createFeedManifest(this.stamp, 'sequence', TOPIC, this.wallet.address);
         const writer = await this.bee.makeFeedWriter('sequence', '0'.repeat(64), this.wallet.privateKey);
         const uploadResults = await this.bee.uploadData(this.stamp, JSON.stringify({}));
         await writer.upload(this.stamp, uploadResults.reference, { index: 0 });
@@ -21,7 +23,7 @@ export class Store {
     }
 
     async getAll(): Promise<Record<string, string[]>> {
-        const feedReader = this.bee.makeFeedReader('sequence', '0'.repeat(64), this.wallet.address);
+        const feedReader = this.bee.makeFeedReader('sequence', TOPIC, this.wallet.address);
         const feedDownloadResults = await feedReader.download();
         console.log({ feedDownloadResults });
         const data = await this.bee.downloadData(feedDownloadResults.reference);
@@ -30,7 +32,7 @@ export class Store {
     }
 
     async append(key: string, value: string): Promise<string> {
-        const feedWriter = this.bee.makeFeedWriter('sequence', '0'.repeat(64), this.wallet.privateKey);
+        const feedWriter = this.bee.makeFeedWriter('sequence', TOPIC, this.wallet.privateKey);
         const data = await this.getAll();
         if (data[key]) {
             if (!data[key].includes(value)) {
