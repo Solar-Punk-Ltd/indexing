@@ -57,11 +57,17 @@ label::after {
   display: flex;
   justify-content: center;
   align-items: center;
-  width: 30px;
+  width: 15px;
   height: 15px;
   background: black;
   color: white;
   clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
+}
+
+.searchBar {
+  display: flex;
+  width: 569px;
+  position: relative;
 }
 
 .searchBar::after {

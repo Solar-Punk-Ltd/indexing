@@ -44,16 +44,14 @@ function SearchPage() {
     Object.assign(trie, trieData);
     Object.setPrototypeOf(trie, Trie.prototype);
 
-    const tags = text
-      .split(",")
-      .map((tag) => tag.trim());
+    const tags = text.split(",").map((tag) => tag.trim());
 
     const result = trie.query(tags);
     console.log(result);
     setResults(result);
 
     setIsClicked(true);
-  }
+  };
 
   return (
     <>
@@ -67,39 +65,38 @@ function SearchPage() {
             marginTop: "40px",
             position: "relative",
           }}
-          className="searchBar"
         >
-          <div className="tooltip2">i</div>
-          <TextField
-            color="primary"
-            component="div"
-            onChange={(e) => setText(e.target.value)}
-            value={text}
-            sx={{
-              marginLeft: "10px",
-              textTransform: "none",
-              backgroundColor: "white",
-              color: "#19002933",
-              fontSize: 16,
-              fontWeight: 400,
-              lineHeight: "32px",
-              justifyContent: "left",
-              width: "100%",
-              height: "48px",
-              boxShadow: "none",
-              clipPath: "polygon(96% 0%,100% 50%,100% 100%,0% 100%,0% 0%)",
-              "& .MuiOutlinedInput-root": {
-                "&.Mui-focused fieldset": {
-                  border: "0px",
+          <div className="searchBar">
+            <div className="tooltip2">i</div>
+            <TextField
+              color="primary"
+              component="div"
+              sx={{
+                marginLeft: "10px",
+                textTransform: "none",
+                backgroundColor: "white",
+                color: "#19002933",
+                fontSize: 16,
+                fontWeight: 400,
+                lineHeight: "32px",
+                justifyContent: "left",
+                width: "100%",
+                height: "48px",
+                boxShadow: "none",
+                clipPath: "polygon(94% 0%,100% 50%,100% 100%,0% 100%,0% 0%)",
+                "& .MuiOutlinedInput-root": {
+                  "&.Mui-focused fieldset": {
+                    border: "0px",
+                  },
                 },
-              },
-              "& .MuiInputBase-root": {
-                "& fieldset": {
-                  border: "0px",
+                "& .MuiInputBase-root": {
+                  "& fieldset": {
+                    border: "0px",
+                  },
                 },
-              },
-            }}
-          ></TextField>
+              }}
+            ></TextField>
+          </div>
           <div style={{ width: "100%", marginLeft: "20px" }}>
             <ConfirmButton
               value="Search"
