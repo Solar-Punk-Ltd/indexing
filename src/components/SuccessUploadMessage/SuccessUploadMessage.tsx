@@ -8,24 +8,21 @@ import CancelButton from "../CancelButton/CancelButton";
 import DoneIcon from "@mui/icons-material/Done";
 
 interface SuccessUploadMessageProps {
-  setTags: (tags: string[]) => void;
-  setNewKeywordsModalOpen: (open: boolean) => void;
+  setSuccessUploadMessageOpen: (open: boolean) => void;
 }
 
 const SuccessUploadMessage: React.FC<SuccessUploadMessageProps> = ({
-  setTags,
-  setNewKeywordsModalOpen,
+  setSuccessUploadMessageOpen,
 }) => {
-  const [textFieldValue, setTextFieldValue] = useState<string>("");
-
-  const handleTagSubmit = () => {
-    const tagsFromTextField = textFieldValue.split(",");
-
-    setTags([...tagsFromTextField]);
-    setNewKeywordsModalOpen(false);
+  const handleCool = () => {
+    setSuccessUploadMessageOpen(false);
   };
   return (
     <div
+      onClick={(e) => {
+        e.preventDefault();
+        e.stopPropagation();
+      }}
       style={{
         width: "720px",
         height: "480px",
@@ -35,48 +32,12 @@ const SuccessUploadMessage: React.FC<SuccessUploadMessageProps> = ({
         position: "relative",
       }}
     >
-      <div className="keywordsSelectText">Keywords</div>
+      <div className="keywordsSelectText">Message</div>
       <div className="keywordsSubText">
-        You can add keywords separated by “,” character for indexing!
+        Congratulation, your content has been landed on the <b>SWARM Planet!</b>
       </div>
-      <div style={{ display: "flex" }}>
-        <div
-          style={{ marginTop: "40px", display: "flex" }}
-          className="sp-textfield"
-        >
-          <div className="tooltip">i</div>
-          <TextField
-            placeholder="Added keywords"
-            multiline
-            value={textFieldValue}
-            onChange={(e) => setTextFieldValue(e.target.value)}
-            sx={{
-              marginLeft: "10px",
-              textTransform: "none",
-              backgroundColor: "white",
-              color: "#19002933",
-              fontSize: 16,
-              fontWeight: 400,
-              lineHeight: "32px",
-              justifyContent: "left",
-              width: "650px",
-              height: "148px",
-              boxShadow: "none",
-              clipPath: "polygon(96% 0%,100% 18%,100% 100%,0% 100%,0% 0%)",
-              border: "0px",
-              "& .MuiOutlinedInput-root": {
-                "&.Mui-focused fieldset": {
-                  border: "0px",
-                },
-              },
-              "& .MuiInputBase-root": {
-                "& fieldset": {
-                  border: "0px",
-                },
-              },
-            }}
-          ></TextField>
-        </div>
+      <div style={{ marginTop: "40px" }}>
+        Since now, You can find it easily by us ;)
       </div>
       <div
         style={{
@@ -86,8 +47,7 @@ const SuccessUploadMessage: React.FC<SuccessUploadMessageProps> = ({
           bottom: "20px",
         }}
       >
-        <CancelButton value="Cancel" />
-        <ConfirmButton value="Done" icon={DoneIcon} onClick={handleTagSubmit} />
+        <ConfirmButton value="Cool" icon={DoneIcon} onClick={handleCool} />
       </div>
     </div>
   );

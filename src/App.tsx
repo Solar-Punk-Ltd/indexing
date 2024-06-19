@@ -8,6 +8,7 @@ import Tag from "./components/Tag/Tag";
 import FileUploadIcon from "@mui/icons-material/FileUpload";
 import { loadStore } from "./utils/loader";
 import { Store } from "./utils/tagStore";
+import SuccessUploadMessage from "./components/SuccessUploadMessage/SuccessUploadMessage";
 
 function App() {
   const [file, setFile] = useState<File | null>(null);
@@ -16,6 +17,8 @@ function App() {
   const [newKeywordsModalOpen, setNewKeywordsModalOpen] = useState(false);
   const [tags, setTags] = useState<string[]>([]);
   const [isFileChoosed, setIsFileChoosed] = useState(false);
+  const [successUploadMessageOpen, setSuccessUploadMessageOpen] =
+    useState(false);
 
   useEffect(() => {
     init();
@@ -37,7 +40,7 @@ function App() {
   };
 
   const handleConfirmButton = () => {
-    setNewKeywordsModalOpen(true);
+    setSuccessUploadMessageOpen(true);
   };
 
   return (
@@ -153,6 +156,26 @@ function App() {
           <NewKeywordsModal
             setTags={setTags}
             setNewKeywordsModalOpen={setNewKeywordsModalOpen}
+          />
+        </div>
+      ) : null}
+      {successUploadMessageOpen ? (
+        <div
+          onClick={() => setSuccessUploadMessageOpen(false)}
+          style={{
+            position: "absolute",
+            width: "100%",
+            height: "100%",
+            top: 0,
+            left: 0,
+            backgroundColor: "#00000057",
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+          }}
+        >
+          <SuccessUploadMessage
+            setSuccessUploadMessageOpen={setSuccessUploadMessageOpen}
           />
         </div>
       ) : null}
