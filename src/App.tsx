@@ -15,6 +15,7 @@ function App() {
   const [fileName, setFileName] = useState("");
   const [newKeywordsModalOpen, setNewKeywordsModalOpen] = useState(false);
   const [tags, setTags] = useState<string[]>([]);
+  const [isFileChoosed, setIsFileChoosed] = useState(false);
 
   useEffect(() => {
     init();
@@ -29,6 +30,7 @@ function App() {
     const fileResult = event.target.files ? event.target.files[0] : null;
     console.log(fileResult);
     if (fileResult) {
+      setIsFileChoosed(true);
       setFile(fileResult);
       setFileName(fileResult.name); // Itt tároljuk el a fájl nevét
     }
@@ -87,8 +89,16 @@ function App() {
         </div>
         <div className="divider"></div>
         <div style={{ width: "100%" }}>
-          <div className="indexingText">Indexing</div>
-          <div className="subText" style={{ color: "#19002933" }}>
+          <div
+            className="indexingText"
+            style={{ color: isFileChoosed ? "#190029" : "#19002933" }}
+          >
+            Indexing
+          </div>
+          <div
+            className="subText"
+            style={{ color: isFileChoosed ? "#190029" : "#19002933" }}
+          >
             Add keywords for indexing!
           </div>
           <div style={{ display: "flex" }}>
@@ -100,7 +110,7 @@ function App() {
             <Button
               style={{
                 backgroundColor: "white",
-                color: "#19002933",
+                color: isFileChoosed ? "#190029" : "#19002933",
                 fontSize: 16,
                 fontWeight: 400,
                 lineHeight: "32px",
@@ -110,6 +120,7 @@ function App() {
                 marginTop: "40px",
                 marginLeft: "20px",
               }}
+              onClick={() => setNewKeywordsModalOpen(true)}
             >
               <AddIcon />
             </Button>
@@ -126,13 +137,14 @@ function App() {
       </div>
       {newKeywordsModalOpen ? (
         <div
+          onClick={() => setNewKeywordsModalOpen(false)}
           style={{
             position: "absolute",
             width: "100%",
             height: "100%",
             top: 0,
             left: 0,
-            backgroundColor: "#0000002e",
+            backgroundColor: "#00000057",
             display: "flex",
             justifyContent: "center",
             alignItems: "center",

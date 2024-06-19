@@ -1,18 +1,18 @@
 import { useState } from "react";
 import Button from "@mui/material/Button";
 import { SvgIconProps } from "@mui/material/SvgIcon";
-import "./NewKeywordsModal.css";
+import "./SuccessUploadMessage.css";
 import TextField from "@mui/material/TextField";
 import ConfirmButton from "../ConfirmButton/ConfirmButton";
 import CancelButton from "../CancelButton/CancelButton";
 import DoneIcon from "@mui/icons-material/Done";
 
-interface NewKeywordsModalProps {
+interface SuccessUploadMessageProps {
   setTags: (tags: string[]) => void;
   setNewKeywordsModalOpen: (open: boolean) => void;
 }
 
-const NewKeywordsModal: React.FC<NewKeywordsModalProps> = ({
+const SuccessUploadMessage: React.FC<SuccessUploadMessageProps> = ({
   setTags,
   setNewKeywordsModalOpen,
 }) => {
@@ -24,16 +24,8 @@ const NewKeywordsModal: React.FC<NewKeywordsModalProps> = ({
     setTags([...tagsFromTextField]);
     setNewKeywordsModalOpen(false);
   };
-
-  const handleCancel = () => {
-    setNewKeywordsModalOpen(false);
-  };
   return (
     <div
-      onClick={(e) => {
-        e.preventDefault();
-        e.stopPropagation();
-      }}
       style={{
         width: "720px",
         height: "480px",
@@ -94,11 +86,11 @@ const NewKeywordsModal: React.FC<NewKeywordsModalProps> = ({
           bottom: "20px",
         }}
       >
-        <CancelButton value="Cancel" onClick={handleCancel} />
+        <CancelButton value="Cancel" />
         <ConfirmButton value="Done" icon={DoneIcon} onClick={handleTagSubmit} />
       </div>
     </div>
   );
 };
 
-export default NewKeywordsModal;
+export default SuccessUploadMessage;
