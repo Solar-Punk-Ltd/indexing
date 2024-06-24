@@ -20,7 +20,7 @@ const NewKeywordsModal: React.FC<NewKeywordsModalProps> = ({
 
   const handleTagSubmit = () => {
     const tagsFromTextField = textFieldValue
-      .split(",")
+      .split(" ")
       .map((tag) => tag.trim());
 
     setTags([...tagsFromTextField]);
